@@ -144,12 +144,12 @@ extension NSError {
 
 func unconsume(error error: NSError, var reusingToken token: ErrorConsumptionToken? = nil) {
     if token != nil {
-        objc_setAssociatedObject(error, &handle, token, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        objc_setAssociatedObject(error, &handle, token, .OBJC_ASSOCIATION_RETAIN)
     } else {
         token = objc_getAssociatedObject(error, &handle) as? ErrorConsumptionToken
         if token == nil {
             token = ErrorConsumptionToken(error)
-            objc_setAssociatedObject(error, &handle, token, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+            objc_setAssociatedObject(error, &handle, token, .OBJC_ASSOCIATION_RETAIN)
         }
     }
     token!.consumed = false
